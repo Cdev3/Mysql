@@ -1,0 +1,104 @@
+USE DA8;
+
+CREATE TABLE STUDENTS (
+    StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    Department VARCHAR(30),
+    Marks INT,
+    City VARCHAR(30)
+);
+
+
+INSERT INTO STUDENTS (Name, Age, Department, Marks, City) VALUES
+('Anil', 20, 'CSE', 85, 'Hyderabad'),
+('Sneha', 22, 'ECE', 75, 'Mumbai'),
+('Ravi', 20, 'CSE', NULL, 'Hyderabad'),
+('Divya', 23, 'MECH', 65, NULL),
+('Kiran', 22, 'ECE', 75, 'Pune'),
+('Varun', 21, 'CSE', 92, 'Chennai'),
+('Priya', 20, 'EEE', 88, 'Delhi'),
+('John', 22, 'MECH', 55, 'Mumbai'),
+('Rekha', 21, 'ECE', 75, 'Pune'),
+('Ramesh', 23, 'EEE', NULL, 'Delhi');
+
+select*from students;
+
+-- ---------------------------------------------------------------
+
+-- QUERIES
+-- WHERE CLAUSE
+
+-- 1) DISPLAY ALL STUDENTS WHO BELONG TO THE CSE 
+-- 2) DISPLAY ALL STUDENTS MARKS<80
+-- 3) STUDENTS AGE >22 
+-- 4) STUDENT MARKS BTW 70 AND 90
+-- 5) STIDENTS DEPT=CSE AND HAS MARKS > 80
+
+-- 1)
+SELECT * FROM students
+WHERE DEPARTMENT = 'CSE';
+
+-- 2)
+SELECT * FROM STUDENTS 
+WHERE MARKS < 80 ;
+
+-- 3)
+SELECT * FROM STUDENTS 
+WHERE AGE > 22  ;
+
+-- 4)  
+SELECT * FROM STUDENTS 
+WHERE MARKS BETWEEN 70 AND 90;
+
+-- 5)
+SELECT * FROM STUDENTS 
+WHERE  DEPTARTMENT = 'CSE' AND  MARKS > 80 ;
+
+-- GROUP BY CLAUSE ------------------------------------------------------------------------------
+
+-- 1) DISPLAT THE AVG MARKS OF STUDENTS IN EACH DEPARTMENT
+SELECT DEPARTMENT,AVG(MARKS)
+FROM STUDENTS    
+GROUP BY DEPARTMENT;
+
+-- 2)  TOTAL MARKS OF STUDENT MARKS IN EACH DEPARTMENT 
+SELECT DEPARTMENT,SUM (MARKS )
+FROM STUDENTS    
+GROUP BY DEPARTMENT;
+
+-- 3) DEPARTMENT WISE MAX MARKS 
+SELECT DEPARTMENT,MAX(MARKS) AS HIGHESTSCORE
+FROM STUDENTS    
+GROUP BY DEPARTMENT;
+
+-- 4) CITYWISE TOTAL STUDENTS 
+SELECT CITY,COUNT(*)
+FROM STUDENTS    
+GROUP BY CITY;
+
+-- HAVING CLAUSE ----------------------------------------------
+
+-- 1) DISPLAY THE DATA OF A DEPT WHICH HAD MORE THAN 80 AFTER THE AVG 
+SELECT DEPARTMENT,AVG(MARKS) AS AVG_MARKS
+FROM students
+GROUP BY DEPARTMENT
+HAVING AVG_MARKS>80;
+
+-- 2) DEPT TOTAL MARKS >200
+SELECT DEPARTMENT,SUM(MARKS) AS TOTAL_MARKS
+FROM students
+GROUP BY DEPARTMENT
+HAVING TOTAL_MARKS>200;
+
+
+-- ORDER BY ----------------------------------------------------
+
+-- CLAUSES EXECUTION ORDER INTERVIEW QUESTION ----------------------------------------------------------------------------------------------------------------------------------
+
+SELECT CITY,COUNT(*) AS TOTAL_STUDENTS
+FROM STUDENTS
+WHERE MARKS>70
+GROUP BY CITY
+HAVING TOTAL_STUDENTS >1
+ORDER BY TOTAL_STUDENTS ASC;
